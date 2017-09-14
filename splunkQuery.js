@@ -21,16 +21,19 @@ service.login(function(err, success) {
 
 });
 
-
-
-var searchQuery = 'search source="smaccess_20170823_235857.log" host="SiteMinder" sourcetype="SiteMinder" Event="[ValidateAccept" | dedup RealmOid, SessionId';
+function makeSearchQuery(args) {
+  // TODO
+  return 'search source="smaccess_20170823_235857.log" host="SiteMinder" sourcetype="SiteMinder" Event="[ValidateAccept" | dedup RealmOid, SessionId';
+}
 
 // Set the search parameters
-var searchParams = {
+const searchParams = {
   exec_mode: "normal"
 };
 
 // Run a normal search that immediately returns the job's SID
+const searchQuery = makeSearchQuery();
+
 service.search(
   searchQuery,
   searchParams,
