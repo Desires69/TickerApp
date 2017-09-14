@@ -1,6 +1,10 @@
+const config = require('./config');
+
 var splunkjs = require('splunk-sdk');
 var Async = splunkjs.Async;
-var service = new splunkjs.Service({username: "admin", password: "21qazSE$#"});
+
+var service = new splunkjs.Service(config.splunk.username, config.splunk.password);
+
 service.login(function(err, success) {
     if (err) {
         throw err;

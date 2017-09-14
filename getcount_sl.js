@@ -1,5 +1,7 @@
 'use strict';
 
+const config = require('./config');
+
 var HttpsProxyAgent = require('https-proxy-agent'),
   url = require('url'),
   querystring = require('querystring'),
@@ -102,15 +104,6 @@ var tokenReceived = function (resp) {
 };
 
 var getToken = function () {
-
-  var config = {
-    client_id: '3111ac5a-c013-46b3-a5cb-d79081f9f2f1',
-    client_secret: 'gEHGLCFdaUVBy8y2RubLv7kzlu0htDcrVEI/528GgA4=',
-    token_service: {
-      host: 'login.microsoftonline.com',
-      path: '/utccloud.onmicrosoft.com/oauth2/token?api-version=1.0'
-    }
-  };
 
   var token_input = {
     grant_type: 'client_credentials',
