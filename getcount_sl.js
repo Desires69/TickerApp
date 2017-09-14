@@ -1,3 +1,5 @@
+'use strict';
+
 var HttpsProxyAgent = require('https-proxy-agent'),
     url = require('url'),
     querystring = require('querystring'),
@@ -14,22 +16,28 @@ var proxyAgent = new HttpsProxyAgent('http://proxyva.utc.com:8080');
 
 //var basicCredentials = 'Basic ';
 
-var prev_date = new Date(new Date().setHours(new Date().getHours()-360)).toISOString();;
+const default_start_period = 360;
+const default_start = new Date();
+default_start.setHours(default_start.getHours() - default_start_period);
+
+let prev_date = default_start;
+
 var count = 0;  
 var db = mongoose.connect('mongodb://localhost/tickerAPI',{useMongoClient: true}); 
-var update = function() { 
-  Ticker.findOne().sort('-updated').exec(function(err, lastUpdate){
-    if(err){
+var update = function() {
+  Ticker.findOne().sort('-updated').exec((err, lastUpdate) => {
+    if(err) {
         console.log(err);
-    }else{
+    } else {
         //var lastUpdateJson = JSON.parse(lastUpdate);
-        if(lastUpdate){
+        if (lastUpdate) {
           count = lastUpdate.count;
           prev_date = lastUpdate.updated; 
         }
     }
+
+    getToken();
   });
-  getToken();
 }
 
 var tokenReceived = function(resp){
