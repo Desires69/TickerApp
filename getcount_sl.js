@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('./config');
+const assert = require('assert');
 
 var HttpsProxyAgent = require('https-proxy-agent'),
   url = require('url'),
@@ -13,7 +14,14 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 //https.globalAgent.options.secureProtocol = 'SSLv3_method';
 
-var proxyAgent = new HttpsProxyAgent('http://proxyva.utc.com:8080');
+let proxyAgent;
+
+if (config.proxy) {
+  assert(config.proxy.url);
+  proxyAgent = new HttpsProxyAgent(config.proxy.url);
+}
+
+const agent = proxyAgent ? proxyAgent : undefined;
 //var proxyAgent = new HttpsProxyAgent('http://ai203025:8888');
 
 //var basicCredentials = 'Basic ';
@@ -63,7 +71,7 @@ var tokenReceived = function (resp) {
       'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
     },
     Accept: '*/*',
-    agent: proxyAgent
+    agent: agent
   };
   service_request(req_options);
 
@@ -126,7 +134,7 @@ var getToken = function () {
       'Content-Length': Buffer.byteLength(querystring.stringify(token_input))
     },
     Accept: '*/*',
-    agent: proxyAgent
+    agent: agent
   };
 
   var token_body = querystring.stringify(token_input);
@@ -154,5 +162,6 @@ var getToken = function () {
   req.end();
 
 }
+
 module.exports = update;
 //getToken();
