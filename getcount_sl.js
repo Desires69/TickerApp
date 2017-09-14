@@ -58,7 +58,7 @@ var tokenReceived = function (resp) {
   var type = resp_obj.token_type;
   var cur_date = new Date(new Date().setHours(new Date().getHours() - 24)).toISOString();
   //var prev_date = new Date(new Date().setMinutes(new Date().getMinutes()-5)).toISOString();
-  var oDataQuery = encodeURI("/utccloud.microsoft.com/activities/signinEvents?api-version=beta&$filter=signinDateTime ge " + prev_date + " and signinDateTime le " + cur_date + " and loginStatus eq '0'");
+  var oDataQuery = encodeURI("/utccloud.microsoft.com/activities/signinEvents?api-version=beta&$filter=signinDateTime ge " + prev_date.toISOString() + " and signinDateTime le " + cur_date + " and loginStatus eq '0'");
 
   var req_options = {
     method: 'GET',
