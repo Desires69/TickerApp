@@ -1,6 +1,10 @@
+const config = require('./config');
+
 var splunkjs = require('splunk-sdk');
 var Async = splunkjs.Async;
-var service = new splunkjs.Service({username: "admin", password: "21qazSE$#"});
+
+var service = new splunkjs.Service(config.splunk.username, config.splunk.password);
+
 service.login(function(err, success) {
     if (err) {
         throw err;
@@ -17,16 +21,19 @@ service.login(function(err, success) {
 
 });
 
-
-
-var searchQuery = 'search source="smaccess_20170823_235857.log" host="SiteMinder" sourcetype="SiteMinder" Event="[ValidateAccept" | dedup RealmOid, SessionId';
+function makeSearchQuery(args) {
+  // TODO
+  return 'search source="smaccess_20170823_235857.log" host="SiteMinder" sourcetype="SiteMinder" Event="[ValidateAccept" | dedup RealmOid, SessionId';
+}
 
 // Set the search parameters
-var searchParams = {
+const searchParams = {
   exec_mode: "normal"
 };
 
 // Run a normal search that immediately returns the job's SID
+const searchQuery = makeSearchQuery();
+
 service.search(
   searchQuery,
   searchParams,
