@@ -21,6 +21,6 @@ gulp.task('default', function(){
         ignore: ['./node_modules/**']
     })
     .on('restart', function(){
-        console.log('Restarting...')
-    })
+        console.log('Restarting...');
+    });
 });

@@ -26,41 +26,27 @@ const agent = proxyAgent ? proxyAgent : undefined;
 
 //var basicCredentials = 'Basic ';
 
-const default_start_period = 360;
-const default_start = new Date();
-default_start.setHours(default_start.getHours() - default_start_period);
+const defaultStartPeriod = 360;
+const defaultStart = new Date();
+defaultStart.setHours(defaultStart.getHours() - defaultStartPeriod);
 
-let prev_date = default_start.toISOString();
+let prevDate = defaultStart.toISOString();
 
 var count = 0;
 var db = mongoose.connect('mongodb://localhost/tickerAPI', {useMongoClient: true});
-var update = function () {
-  Ticker.findOne().sort('-updated').exec((err, lastUpdate) => {
-    if (err) {
-      console.log(err);
-    } else {
-      //var lastUpdateJson = JSON.parse(lastUpdate);
-      if (lastUpdate) {
-        count = lastUpdate.count;
-        prev_date = lastUpdate.updated;
-      }
-    }
 
-    getToken();
-  });
-}
 
 var tokenReceived = function (resp) {
 
   console.log(resp);
-  var resp_obj = JSON.parse(resp);
-  var token = resp_obj.access_token;
-  var type = resp_obj.token_type;
-  var cur_date = new Date(new Date().setHours(new Date().getHours() - 24)).toISOString();
+  var respObj = JSON.parse(resp);
+  var token = respObj.access_token;
+  var type = respObj.token_type;
+  var curDate = new Date(new Date().setHours(new Date().getHours() - 24)).toISOString();
   //var prev_date = new Date(new Date().setMinutes(new Date().getMinutes()-5)).toISOString();
-  var oDataQuery = encodeURI("/utccloud.microsoft.com/activities/signinEvents?api-version=beta&$filter=signinDateTime ge " + prev_date + " and signinDateTime le " + cur_date + " and loginStatus eq '0'");
+  var oDataQuery = encodeURI('/utccloud.microsoft.com/activities/signinEvents?api-version=beta&$filter=signinDateTime ge ' + prevDate + ' and signinDateTime le ' + curDate + ' and loginStatus eq "0"');
 
-  var req_options = {
+  var reqOptions = {
     method: 'GET',
     host: 'graph.windows.net',
     port: '443',
@@ -73,56 +59,56 @@ var tokenReceived = function (resp) {
     Accept: '*/*',
     agent: agent
   };
-  service_request(req_options);
+  serviceRequest(reqOptions);
 
-  function service_response_handler(resp) {
+  function serviceResponseHandler(resp) {
     var response = '';
     resp.on('data', function (chunk) {
       response += chunk;
     });
     resp.on('end', function () {
-      service_response_received(response);
+      serviceResponseReceived(response);
     });
   }
-  function service_response_received(resp) {
+  function serviceResponseReceived(resp) {
     try {
-      var service_resp_obj = JSON.parse(resp);
+      var serviceRespObj = JSON.parse(resp);
     } catch (e) {
       console.log(e);
     }
-    count += service_resp_obj.value.length;
-    if (service_resp_obj['@odata.nextLink']) {
-      var test = service_resp_obj['@odata.nextLink'];
-      req_options.path = url.parse(service_resp_obj['@odata.nextLink']).path;
-      service_request(req_options);
+    count += serviceRespObj.value.length;
+    if (serviceRespObj['@odata.nextLink']) {
+      var test = serviceRespObj['@odata.nextLink'];
+      reqOptions.path = url.parse(serviceRespObj['@odata.nextLink']).path;
+      serviceRequest(reqOptions);
     } else {
       console.log(count);
-      var updateQuery = {'updated': cur_date, 'count': count}
+      var updateQuery = {'updated': curDate, 'count': count};
       var ticker = new Ticker(updateQuery);
       console.log(ticker);
       ticker.save();
     }
   }
-  function service_request(options) {
+  function serviceRequest(options) {
     console.log('requesting', options.path);
-    var serv_req = https.request(options, service_response_handler);
-    serv_req.end();
+    var servReq = https.request(options, serviceResponseHandler);
+    servReq.end();
   }
 
 };
 
 var getToken = function () {
 
-  var token_input = {
+  var tokenInput = {
     grant_type: 'client_credentials',
     resource: '',
     client_id: config.client_id,
     client_secret: config.client_secret
   };
 
-  var token_body = querystring.stringify(token_input);
+  var tokenBody = querystring.stringify(tokenInput);
 
-  var req_options = {
+  var reqOptions = {
     method: 'POST',
     host: config.token_service.host,
     port: '443',
@@ -131,15 +117,15 @@ var getToken = function () {
       //'Proxy-Authorization': basicCredentials, 
       'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36',
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Content-Length': Buffer.byteLength(querystring.stringify(token_input))
+      'Content-Length': Buffer.byteLength(querystring.stringify(tokenInput))
     },
     Accept: '*/*',
     agent: agent
   };
 
-  var token_body = querystring.stringify(token_input);
+  var tokenBody = querystring.stringify(tokenInput);
 
-  var req = https.request(req_options, function (res) {
+  var req = https.request(reqOptions, function (res) {
 
     var response = '';
 
@@ -157,11 +143,25 @@ var getToken = function () {
     console.error(e);
   });
 
-  req.write(token_body);
+  req.write(tokenBody);
 
   req.end();
 
-}
+};
+var update = function () {
+  Ticker.findOne().sort('-updated').exec((err, lastUpdate) => {
+    if (err) {
+      console.log(err);
+    } else {
+      //var lastUpdateJson = JSON.parse(lastUpdate);
+      if (lastUpdate) {
+        count = lastUpdate.count;
+        prevDate = lastUpdate.updated;
+      }
+    }
 
+    getToken();
+  });
+};
 module.exports = update;
 //getToken();
