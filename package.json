@@ -13,8 +13,11 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
     "gulp": "^3.9.1",
+    "gulp-jscs": "^4.0.0",
+    "gulp-jshint": "^2.0.4",
     "gulp-nodemon": "^2.2.1",
     "https-proxy-agent": "^2.1.0",
+    "jshint-stylish": "^2.2.1",
     "mongoose": "^4.11.7",
     "splunk-sdk": "^1.8.2"
   }
