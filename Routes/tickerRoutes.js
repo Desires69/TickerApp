@@ -50,6 +50,8 @@ var routes = function(Ticker){
                                 res.json(tickers);
                             }
                         });
+                    }else{
+                        res.status(500).send('No count in body');
                     }
                 }else{
                     res.status(404).send('No entry found');
