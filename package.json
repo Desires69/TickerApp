@@ -20,5 +20,8 @@
     "jshint-stylish": "^2.2.1",
     "mongoose": "^4.11.7",
     "splunk-sdk": "^1.8.2"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.5"
   }
 }

@@ -1,5 +1,15 @@
 var gulp = require('gulp'),
-    nodemon = require('gulp-nodemon');
+    nodemon = require('gulp-nodemon'),
+    jshint = require('gulp-jshint');
+
+var jsFiles = ['*.js', 'src/**/*.js'];
+gulp.task('style', function(){
+    gulp.src(jsFiles)
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish', {
+            verbose: true
+        }));
+});
 
 gulp.task('default', function(){
     nodemon({
