@@ -34,6 +34,28 @@ var routes = function(Ticker){
                 }
             });
         });
+    ticker_router.route('/setCount')
+        .patch(function(req,res){
+            Ticker.findOne().sort('-updated').exec(function(err, tickers){
+                if(err){
+                    res.status(500).send(err);
+                    console.log(err);
+                }else if(tickers){
+                    if(req.body.count){
+                        tickers.count = req.body.count;
+                        tickers.save(function(err){
+                            if(err){
+                                res.status(500).send(err);
+                            }else{
+                                res.json(tickers);
+                            }
+                        });
+                    }
+                }else{
+                    res.status(404).send('No entry found');
+                }
+            });
+    });
 
     return ticker_router;
 };
