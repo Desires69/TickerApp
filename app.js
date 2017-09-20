@@ -10,9 +10,12 @@ var Ticker = require('./models/tickerModel');
 
 var app = express();
 var port = process.env.port || 3000;
-
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+app.set('views', './src/views');
+app.set('view engine', 'ejs');
 
 const tickerRouter = require('./Routes/tickerRoutes')(Ticker);
 
@@ -22,7 +25,7 @@ app.use('/api', tickerRouter);
 
 
 app.get('/', function(req, res){
-    res.send('Welcome to my API!');
+    res.render('index');
 });
 
 app.listen(port, function(){
