@@ -18,10 +18,10 @@ app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 const tickerRouter = require('./Routes/tickerRoutes')(Ticker);
-
+const adminRouter = require('./Routes/adminRoutes')(Ticker);
 
 app.use('/api', tickerRouter);
-
+app.use('/admin', adminRouter);
 
 
 app.get('/', function(req, res){
