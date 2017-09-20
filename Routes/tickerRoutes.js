@@ -1,9 +1,9 @@
 var express = require('express');
+var adminRouter = express.Router();
 
-var routes = function(Ticker){
-    var ticker_router = express.Router();
+var router = function(Ticker){
     
-    ticker_router.route('/recentLogins')
+    adminRouter.route('/recentLogins')
         .post(function(req,res){
             var ticker = new Ticker(req.body);
             console.log(ticker);
@@ -23,7 +23,7 @@ var routes = function(Ticker){
                 }
             });
         });
-    ticker_router.route('/lastLogin')
+    adminRouter.route('/lastLogin')
         .get(function(req, res){
             var query = {}
             Ticker.findOne().sort('-updated').exec(function(err, tickers){
@@ -34,7 +34,7 @@ var routes = function(Ticker){
                 }
             });
         });
-    ticker_router.route('/setCount')
+    adminRouter.route('/setCount')
         .patch(function(req,res){
             Ticker.findOne().sort('-updated').exec(function(err, tickers){
                 if(err){
@@ -59,7 +59,7 @@ var routes = function(Ticker){
             });
     });
 
-    return ticker_router;
+    return adminRouter;
 };
 
-module.exports = routes;
+module.exports = router;
