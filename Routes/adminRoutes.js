@@ -15,8 +15,10 @@ var router = function(Ticker, nav){
                     res.render('admin',{
                         title: 'Admin main',
                         nav: nav,
-                        recentCounts: tickers
+                        recentCounts: tickers,
+                        status: req.statusCode
                     });
+                    console.log(req.statusCode + ' ' + res.statusCode);
                 }
             });
 
@@ -71,7 +73,7 @@ var router = function(Ticker, nav){
                             if(err){
                                 res.status(500).send(err);
                             }else{
-                                res.redirect('/admin/countUpdate');
+                                res.status(201).redirect('/admin');
                             }
                         });
                     }else{
