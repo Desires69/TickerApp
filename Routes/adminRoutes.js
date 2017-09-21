@@ -6,10 +6,9 @@ var router = function(Ticker, nav){
     adminRouter.route('/')
         .get(function(req,res){
             var query = {};
-            if (req.query.count){
-                query.count = req.query.count;
-            }
-            Ticker.find(query, function(err, tickers){
+            var limit = parseInt(req.query.limit) || 10;
+
+            Ticker.find().sort('-updated').limit(limit).exec(function(err, tickers){
                 if(err){
                     console.log(err);
                 }else{
