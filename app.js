@@ -9,16 +9,19 @@ var Ticker = require('./models/tickerModel');
 
 
 var app = express();
-var port = process.env.port || 4000;
+var port = process.env.port || 3000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-
+const adminNav = [{
+        Link: '/admin/countUpdate',
+        Text: 'Update'
+        }];
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
 const tickerRouter = require('./Routes/tickerRoutes')(Ticker);
-const adminRouter = require('./Routes/adminRoutes')(Ticker);
+const adminRouter = require('./Routes/adminRoutes')(Ticker, adminNav);
 
 app.use('/api', tickerRouter);
 app.use('/admin', adminRouter);

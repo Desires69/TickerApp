@@ -27,18 +27,11 @@
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
-        <li>
-          <a href="#">Category</a>
-        </li>
-        <li>
-          <a href="#">Category</a>
-        </li>
-        <li>
-          <a href="#">Category</a>
-        </li>
-        <li>
-          <a href="#">Category</a>
-        </li>
+        <% for(var i=0; i<nav.length; i++ ){%>
+          <li>
+            <a href="<%=nav[i].Link%>"><%=nav[i].Text%></a>
+          </li>
+        <%}%>
       </ul>
       <ul class="nav navbar-right navbar-nav">
         <li class="dropdown">
@@ -98,7 +91,7 @@
           
           <!--/stories-->
           <div class="row">
-            <form name="updateCountForm" action="/admin/setCount" method="POST">
+            <form name="updateCountForm" action="/admin/setCount/<%=recentCounts.id%>" method="POST">
             <br>
             <div class="col-md-2 col-sm-3 text-center">
               <h3>Last Updated</h3>
