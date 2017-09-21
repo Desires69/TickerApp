@@ -8,8 +8,5 @@
   "splunk": {
     "username": "admin",
     "password": "21qazSE$#"
-  },
-  "proxy": {
-    "url": "http://proxyva.utc.com:8080"
   }
 }

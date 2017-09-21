@@ -7,7 +7,10 @@ var router = function(Ticker, nav){
         .get(function(req,res){
             var query = {};
             var limit = parseInt(req.query.limit) || 10;
-
+            var status = false;
+            if(req.query.success){
+                status = true;
+            }
             Ticker.find().sort('-updated').limit(limit).exec(function(err, tickers){
                 if(err){
                     console.log(err);
@@ -16,7 +19,7 @@ var router = function(Ticker, nav){
                         title: 'Admin main',
                         nav: nav,
                         recentCounts: tickers,
-                        status: req.statusCode
+                        status: status
                     });
                     console.log(req.statusCode + ' ' + res.statusCode);
                 }
@@ -73,7 +76,7 @@ var router = function(Ticker, nav){
                             if(err){
                                 res.status(500).send(err);
                             }else{
-                                res.status(201).redirect('/admin');
+                                res.status(201).redirect('/admin?success=true');
                             }
                         });
                     }else{
