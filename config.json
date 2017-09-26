@@ -8,5 +8,31 @@
   "splunk": {
     "username": "admin",
     "password": "21qazSE$#"
-  }
+  },
+  "exclusionIDs": ["2e2b5aab-23ce-4cd7-bb79-639f8fc86d7a",
+                    "3902b70b-22bd-495b-80c5-2b1d38f1113d",
+                    "3cb6a2f3-dd0e-4a7a-ad4b-60141bcdc1c8",
+                    "436a55f2-dc79-444d-b154-c44fdd41c46f",
+                    "43e5b01c-b9db-4f15-9c6e-b4d2dfc6a57d",
+                    "4e31c259-4969-4c6a-9e94-64c5c9536c29",
+                    "775e59e7-f401-4677-b08b-07cecf5fd232",
+                    "88c0645f-2db0-4481-8104-651032a0a64a",
+                    "9109ea34-a213-4535-a069-1de85c571f25",
+                    "a15e1cce-1235-4e01-a0c7-d143697b9860",
+                    "a1bb4267-e8f2-4071-b506-ad64fe914910",
+                    "a6826919-b123-4c6a-a6b9-95805bac7970",
+                    "bf617b9e-03c3-46db-8008-4d8a735aecc5",
+                    "c7628da2-1172-4ead-8879-056aa858b6bc",
+                    "cad5d2c6-709e-4733-95cd-0b276f005456",
+                    "ccb8607e-7def-417d-bcbb-5020dcc1f142",
+                    "ced07629-0f93-4f4e-9042-a38f83185235",
+                    "d34f8b37-75a0-49ff-ab6b-d9aa607399bd",
+                    "d80647ea-56c0-4784-84ed-6ac5dc4f8878",
+                    "d9ab2336-d292-4be7-a7c7-2b217784420f",
+                    "e12b7fce-31f1-4710-acc9-abee39ff6711",
+                    "f2552ffc-b90b-4672-ba48-34199ed56866",
+                    "fbd59f97-2e58-44d1-b0dc-5b772ce3ac49",
+                    "fcc4b648-f035-43d1-94c3-95de1234d54a",
+                    "fd8b61c1-1bf1-42c0-a5d8-f8b775ee828f"
+                    ]
 }
