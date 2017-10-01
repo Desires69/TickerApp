@@ -76,7 +76,11 @@ var tokenReceived = function (resp) {
     } catch (e) {
       console.log(e);
     }
-    count += serviceRespObj.value.length;
+    let filteredResult = serviceRespObj.value.filter(function(result){
+      return !config.exclusionIDs.includes(result.appId);
+    });
+    
+    count += filteredResult.length;
     if (serviceRespObj['@odata.nextLink']) {
       var test = serviceRespObj['@odata.nextLink'];
       reqOptions.path = url.parse(serviceRespObj['@odata.nextLink']).path;
