@@ -93,11 +93,11 @@
           <% for(var i=0; i<recentCounts.length; i++ ){%>
           <div class="row">    
             <br>
-            <div class="col-md-2 col-sm-3">
+            <div class="col-md-4 col-sm-4">
                 <h3>Last Updated</h3>
                 <h4><span class="label label-default"><%=recentCounts[i].updated%></span></h4><h4></h4>
             </div>
-            <div class="col-md-10 col-sm-9">
+            <div class="col-md-8 col-sm-8">
               <div class="row">
                 <% if (i===0) { %>
                   <form name="updateCountForm" action="/admin/setCount/<%=recentCounts[i].id%>" method="POST">
