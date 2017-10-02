@@ -9,6 +9,9 @@
     "username": "admin",
     "password": "21qazSE$#"
   },
+  "Proxy": {
+    "url": "http://proxyva.utc.com:8080"
+  },
   "exclusionIDs": ["2e2b5aab-23ce-4cd7-bb79-639f8fc86d7a",
                     "3902b70b-22bd-495b-80c5-2b1d38f1113d",
                     "3cb6a2f3-dd0e-4a7a-ad4b-60141bcdc1c8",
